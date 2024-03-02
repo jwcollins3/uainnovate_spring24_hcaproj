@@ -2,13 +2,22 @@
 const map = L.map('map').setView([37.8, -96], 4);
 const filterSelect = document.getElementById('filter');
 
+fetch('/client/resources/data.json')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(item => {
+            L.marker([item.latitude, item.longitude]).addTo(map)
+                .bindPopup(item.full_address); // Assuming your JSON has latitude, longitude, and full_address fields
+        });
+        console.log(data);
+    })
+    .catch(error => console.error('Error loading data:', error));
+ 
+
 // Add the base map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
 }).addTo(map);
-
-// Add GeoJSON layer
-L.geoJSON(statesData).addTo(map);
 
 // Add event listener to handle filter change
 filterSelect.addEventListener('change', function() {
@@ -53,3 +62,4 @@ linkNames.forEach((name, index) => {
     // Append the anchor element to the sidebar container
     sidebar.appendChild(link);
 });
+
