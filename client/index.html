@@ -5,11 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HCA Map</title>
     <link rel="stylesheet" href="resources/styles/index.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
 </head>
 <body>
     <div id="header">
         <img src="https://hcahealthcaretoday.com/wp-content/uploads/2020/05/HCA-Healthcare-Logo@2x.png" alt="Header Image">
-        <h1>HCA Interactive Map</h1>
+         <div id="title">
+             <h1>HCA Interactive Map</h1>
+        </div>
     </div>
+   
+
+    <div id="filter-container">
+        <span>Filter:</span>
+        <select id="filter">
+            <option value="all">All</option>
+            <option value="Number">By EMR</option>
+            <option value="Number">By Address</option>
+            <option value="Number">By State/Zip Code</option>
+            <option value="Number">By Division</option>
+            <option value="Number">By Time Zone</option>
+        </select>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- optional for fetching GeoJSON data -->
+    <script src="./resources/scripts/mapdata.js"></script> <!-- your GeoJSON data -->
+    <script src="./resources/scripts/index.js"></script> <!-- your JavaScript code -->
+
+    <div class="sidebar" id="sidebar">
+        <!-- Sidebar links will be dynamically generated here -->
+      </div>
+      
+      <!-- Page content -->
+      <div class="content">
+        <!-- Content goes here -->
+    </div>
+
+    <div id="bottom">
+        <div id="botText">
+            <p>UA Innovate Spring 2024</p>
+        </div>
+    </div>
+
 </body>
 </html>

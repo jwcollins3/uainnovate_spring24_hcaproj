@@ -1,25 +1,77 @@
-body {
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center items horizontally */
+    width: 100%;
+    height: 120px;
+    background-color: #03173E;
+    padding: 10px;
+    box-shadow: 0 15px 10px rgba(224, 89, 41);
+    overflow: hidden;
 }
 
-#header {
-    width: 100%;
-    height: 120px; /* Adjust height as needed */
-    background-color: #03173E; /* Header background color */
-    text-align: center;
-    padding-top: 20px; /* Adjust padding as needed */
-    box-shadow: 0 15px 10px rgba(224, 89, 41); /* Add shadow */
-}
 
 #header img {
-    width: 150px; /* Adjust width as needed */
-    height: auto; /* Maintain aspect ratio */
+    width: 140px;
+    height: auto;
+    margin-right: 20px; /* Add some spacing between image and title */
 }
 
-#header h1 {
-    color: #ffffff; /* Default text color */
-    margin: 0;
-    font-family: 'Neue Helvetica', Times, serif; /* font */
-    font-weight: normal; /* not bold */
+#title {
+    color: #ffffff;
+    text-align: center; /* Center the text horizontally */
+    font-weight: normal;
+}
+
+#title h1 {
+    margin: 0; /* Remove default margin */
+    font-weight: normal;
+}
+
+/* Map */
+#map {
+    width: 80%; /* Adjust the width to make it less wide */
+    margin: 20px auto; /* Center the map horizontally */
+    height: 280px; /* Adjust the height as needed */
+}
+
+#filter-container {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Georgia', Times, serif;
+    font-weight: normal;
+}
+
+#filter {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+    font-family: 'Georgia', Times, serif;
+    font-weight: normal;
+    text-align: center;
+}
+
+#botText {
+    color: #ffffff;
+    text-align: center; /* Center the text horizontally */
+    font-weight: normal;
+}
+
+#botText p {
+    margin: 0; /* Remove default margin */
+    font-weight: normal;
+}
+
+#bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    
+    background-color: #03173E;
+    padding: 20px;
 }
