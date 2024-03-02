@@ -9,7 +9,7 @@ body {
     background-color: #03173E; /* Header background color */
     text-align: center;
     padding-top: 20px; /* Adjust padding as needed */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+    box-shadow: 0 15px 10px rgba(224, 89, 41); /* Add shadow */
 }
 
 #header img {
@@ -20,5 +20,6 @@ body {
 #header h1 {
     color: #ffffff; /* Default text color */
     margin: 0;
-    font-family: 'Times New Roman', Times, serif; /* font */
+    font-family: 'Neue Helvetica', Times, serif; /* font */
+    font-weight: normal; /* not bold */
 }
