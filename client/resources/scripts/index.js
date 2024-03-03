@@ -1,3 +1,7 @@
+function handleOnLoad(){
+    displayDropdowns()
+}
+
 // Initialize the map
 const map = L.map('map').setView([37.8, -96], 4);
 const filterSelect = document.getElementById('filter');
@@ -20,37 +24,44 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
+const filterTypes = [
+    { name: 'EMR', options: ['EMR', 'Cerner', 'EPIC', 'MT56', 'MTx', 'MTX', 'Unknown'] },
+    { name: 'Division', options: ['Division', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
+    { name: 'Timezone', options: ['Timezone', 'Eastern Timezone', 'Pacific Timezone', 'Central Timezone', 'Alaska Timezone', 'Mountain Timezone'] },
+    { name: 'State', options: ['State', 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'] },
+    { name: 'Address', options: ['Address', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
+    // Add more filter types with their respective options as needed
+];
 
-// const filterTypes = [
-//     { name: 'EMR', options: ['EMR', 'EMR Option 1', 'EMR Option 2', 'EMR Option 3'] },
-//     { name: 'Division', options: ['Division', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
-//     { name: 'Timezone', options: ['Timezone', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
-//     { name: 'State/Zip', options: ['State', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
-//     { name: 'Address', options: ['Address', 'Address Option 1', 'Address Option 2', 'Address Option 3'] }
-   
-// ]
-function populateDropdown(data, category, dropdownId) {
-    const dropdown = document.getElementById(dropdownId);
-    const uniqueValues = [...new Set(data.map(item => item[category]))];
-
-    uniqueValues.forEach(value => {
-        const option = document.createElement('option');
-        option.value = value;
-        option.textContent = value;
-        dropdown.appendChild(option);
-    });
+function displayDropdowns() {
+    fetch('/client/resources/data.json')
+        .then(response => response.json())
+        .then(data => {
+            populateDropdowns(data, 'EMR', 'emrSelect');
+            populateDropdowns(data, 'Timezone', 'timezoneSelect');
+            populateDropdowns(data, 'Division', 'divisionSelect');
+            populateDropdowns(data, 'State', 'stateSelect');
+            populateDropdowns(data, 'Address', 'addressSelect');
+            // Add more calls to populateDropdown for other categories
+        })
+        .catch(error => console.error('Error fetching JSON:', error));
 }
 
-// Fetch data and populate dropdowns
-fetch('/client/resources/data.json')
-    .then(response => response.json())
-    .then(data => {
-        populateDropdown(data, 'emr_name', 'emrSelect');
-        populateDropdown(data, 'facility_state', 'stateSelect');
-        populateDropdown(data, 'timezone', 'timezoneSelect');
-        // Add more calls to populateDropdown for other categories
-    })
-    .catch(error => console.error('Error fetching JSON:', error));
+function populateDropdowns(data, category, dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    const filterType = filterTypes.find(filter => filter.name.toLowerCase() === category.toLowerCase());
+
+    if (filterType) {
+        filterType.options.forEach(option => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option.toLowerCase().replace(/\s+/g, ''); // Convert option text to lowercase and remove spaces
+            optionElement.textContent = option;
+            // dropdown.appendChild(optionElement);
+        });
+    }
+}
+
+
 
 
 
