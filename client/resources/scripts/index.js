@@ -2,7 +2,7 @@ let hcaData = [];
 
 async function handleOnLoad() {
     await getData();
-    displayDropdowns();
+    populateDropdowns();
 }
 
 // Initialize the map
@@ -111,25 +111,44 @@ function populateDropdowns(data, category, dropdownId) {
     document.getElementById('filter-container').innerHTML = html
 }
 
-function emrFilter(){
-    alert('yo')
+const filterOptions = {
+    all: [],
+    address: ['Full Address', 'City', 'State', 'Zip'],
+    state: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'], // All 50 states
+    division: ['Capital', 'Central West Texas', 'Continental', 'East Florida', 'Far West', 'Gulf Coast', 'HCA Corp', 'HSC', 'MidAmerica', 'Mountain', 'North Carolina', 'North Florida', 'North Texas', 'Physician Services Group', 'San Antonio', 'South Atlantic', 'Supply Chain', 'Tristar'], // Will be populated dynamically
+    timeZone: ['Time Zone Code'],
+    emr: ['EMR Code']
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+    const filterSelect = document.getElementById('filterOptions');
+    const subFilterSelect = document.getElementById('subFilterOptions');
+
+    filterSelect.addEventListener('change', function() {
+        const selectedOption = filterSelect.value;
+        const options = filterOptions[selectedOption] || [];
+        populateSubFilterOptions(subFilterSelect, options);
+    });
+
+    fetch('/client/resources/data.json')
+        .then(response => response.json())
+        .then(data => {
+            const divisionNames = [...new Set(data.map(item => item.division_name))];
+            filterOptions.division = divisionNames;
+        })
+        .catch(error => console.error('Error loading data:', error));
+});
+
+function populateSubFilterOptions(select, options) {
+    select.innerHTML = '<option value="">Select a filter</option>';
+    options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.text = option;
+        select.appendChild(optionElement);
+    });
 }
 
-function timezoneFilter(){
-    alert('timezome')
-}
-
-function divisionFilter(){
-    alert('division')
-}
-
-function stateFilter(){
-    alert('state')
-}
-
-function addressFilter(){
-    alert('address')
-}
 
 // Side Bar Click
 // Array of link names
