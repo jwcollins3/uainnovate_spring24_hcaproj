@@ -18,7 +18,7 @@ var colors = {
 };
 
 //References to use for filtering
-var markerReferences = [];
+var markerReferences = {};
 //To delete markers
 //markers.removeLayer(marker);
 fetch('resources/scripts/data.json')
@@ -67,13 +67,14 @@ fetch('resources/scripts/data.json')
             
             // Add the marker to the Marker Cluster Group
             markers.addLayer(marker);
-            markerReferences.push(marker);
+            markerReferences[item] = marker;
         });
 
         // Add the Marker Cluster Group to the map
         map.addLayer(markers);
 
-        console.log(data);
+        //console.log(data);
+        console.log(data[0])
     })
     .catch(error => console.error('Error loading data:', error));
 
