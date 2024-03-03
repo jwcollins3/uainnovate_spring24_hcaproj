@@ -1,28 +1,57 @@
-let hcaData = []
+let hcaData = [];
 
-async function handleOnLoad(){
-    await getData()
-    displayDropdowns()
+async function handleOnLoad() {
+    await getData();
+    displayDropdowns();
 }
 
 // Initialize the map
 const map = L.map('map').setView([37.8, -96], 4);
 const filterSelect = document.getElementById('filter');
 
+// Define colors for different facility types
+var colors = {
+    divisionOffice: '#ffa500',  // Orange
+    supplyChainCenter: '#0000ff',  // Blue
+    sharedServiceCenter: '#008000',  // Green
+    hospital: '#FF0000'  // Pink
+};
+
 fetch('resources/scripts/data.json')
     .then(response => response.json())
     .then(data => {
         data.forEach(item => {
-            L.marker([item.latitude, item.longitude]).addTo(map)
-                .bindPopup(
-                    `<b>${item.facility_name}</b><br>${item.full_address}<br>${item.emr_name}<br>${item.division_name}`
-                    ); // Assuming your JSON has latitude, longitude, and full_address fields
+            // Determine marker color based on facility_type
+            let markerColor = '#000000'; // Default color
+            switch (item.facility_type) {
+                case "Division Office":
+                    markerColor = colors.divisionOffice;
+                    break;
+                case "Supply Chain Center":
+                    markerColor = colors.supplyChainCenter;
+                    break;
+                case "Shared Service Center":
+                    markerColor = colors.sharedServiceCenter;
+                    break;
+                case "Hospital":
+                    markerColor = colors.hospital;
+                    break;
+            }
+
+            // Create a circleMarker with the determined color
+            let marker = L.circleMarker([item.latitude, item.longitude], {
+                color: markerColor,
+                fillColor: markerColor,
+                fillOpacity: 0.5,
+                radius: 8
+            }).addTo(map).bindPopup(
+                `<b>${item.facility_name}</b><br>${item.full_address}<br>${item.emr_name}<br>${item.division_name}`
+            );
         });
         console.log(data);
     })
     .catch(error => console.error('Error loading data:', error));
 
- 
 // Add the base map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
