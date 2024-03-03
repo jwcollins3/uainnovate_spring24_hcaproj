@@ -2,7 +2,7 @@ let hcaData = [];
 
 async function handleOnLoad() {
     await getData();
-    displayDropdowns();
+    populateDropdowns();
 }
 
 // Initialize the map
