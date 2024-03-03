@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
         populateSubFilterOptions(subFilterSelect, options);
     });
 
-    fetch('/client/resources/data.json')
+    fetch('resources/scripts/data.json')
         .then(response => response.json())
         .then(data => {
             const divisionNames = [...new Set(data.map(item => item.division_name))];
@@ -150,7 +150,6 @@ function populateSubFilterOptions(select, options) {
 }
 
 
-// Side Bar Click
 // Array of link names
 const linkNames = ['Home', 'News', 'Contact', 'About'];
 
@@ -176,6 +175,8 @@ linkNames.forEach((name, index) => {
     // Append the anchor element to the sidebar container
     // sidebar.appendChild(link);
 });
+
+//Detail Side Bar
 
 function updateDetailPane(item) {
     const detailPane = document.getElementById('detailPane');

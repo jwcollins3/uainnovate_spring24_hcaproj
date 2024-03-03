@@ -44,6 +44,12 @@ body {
     font-family: 'Georgia', Times, serif;
     font-weight: normal;
 }
+#sub-filter-container {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Georgia', Times, serif;
+    font-weight: normal;
+}
 
 #filter {
     padding: 8px 12px;
@@ -94,6 +100,8 @@ body {
 body {
     margin-right: 300px; /* Adjust body margin to prevent content from being hidden by the detail pane */
 }
+
+
 
 #detailPane {
     padding: 20px;
