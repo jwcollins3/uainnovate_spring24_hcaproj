@@ -52,6 +52,9 @@ fetch('resources/scripts/data.json')
                 </br>
                 <a href="#" class="more-info">More Info</a>`
             );
+        marker.on('mouseover', function(ev) {
+            marker.openPopup();
+        });
             marker.on('click', function() {
                 // Update the detail pane with information from the clicked item
                 updateDetailPane(item);
