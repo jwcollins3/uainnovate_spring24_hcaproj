@@ -6,7 +6,7 @@
     height: 120px;
     background-color: #03173E;
     padding: 10px;
-    box-shadow: 0 15px 10px rgba(224, 89, 41);
+    box-shadow: 0 10px 10px rgba(224, 89, 41);
     overflow: hidden;
 }
 
@@ -31,8 +31,8 @@
 /* Map */
 #map {
     width: 80%; /* Adjust the width to make it less wide */
-    margin: 20px auto; /* Center the map horizontally */
-    height: 280px; /* Adjust the height as needed */
+    margin: 40px auto 20px; /* Center the map horizontally */
+    height: 580px; /* Adjust the height as needed */
 }
 
 #filter-container {
@@ -73,7 +73,7 @@
     width: 100%;
     
     background-color: #03173E;
-    padding: 20px;
+    padding: 30px;
 }
 
 .detail-pane {
@@ -91,3 +91,43 @@
 body {
     margin-right: 300px; /* Adjust body margin to prevent content from being hidden by the detail pane */
 }
+
+#detailPane {
+    padding: 20px;
+    border: 3px solid rgba(224, 89, 41);
+    box-shadow: 0 15px 10px rgba(224, 89, 41);
+    border-radius: 5px;
+    background-color: #03173E;
+    margin-bottom: 20px;
+}
+
+/* Heading styles */
+#detailPane h2 {
+    color: #ffffff;
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-family: 'Georgia', Times, serif;
+}
+#detailPane hr {
+    border: 0;
+    border-top: 2px solid rgba(224, 89, 41);
+    margin: 20px 0;
+    font-family: 'Georgia', Times, serif;
+}
+/* Paragraph styles */
+#detailPane p {
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-family: 'Georgia', Times, serif;
+    font-weight: normal;
+}
+
+/* Strong (bold) text styles */
+#detailPane strong {
+    font-weight: bold;
+}
+.orange-text {
+    color: rgba(224, 89, 41);
+}
+
+
