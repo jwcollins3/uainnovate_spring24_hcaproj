@@ -75,3 +75,19 @@
     background-color: #03173E;
     padding: 20px;
 }
+
+.detail-pane {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 300px; /* Adjust the width as needed */
+    height: 100vh; /* Full height of the viewport */
+    background-color: #f4f4f4; /* Light grey background, change as needed */
+    overflow-y: auto; /* Add scroll for content overflow */
+    padding: 20px; /* Add some padding for content */
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1); /* Optional: adds a slight shadow for depth */
+}
+
+body {
+    margin-right: 300px; /* Adjust body margin to prevent content from being hidden by the detail pane */
+}

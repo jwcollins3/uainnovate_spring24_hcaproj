@@ -47,8 +47,12 @@ fetch('resources/scripts/data.json')
             }).addTo(map).bindPopup(
                 `<b>${item.facility_name}</b><br>${item.full_address}<br>${item.emr_name}<br>${item.division_name}`
             );
+            marker.on('click', function() {
+                // Update the detail pane with information from the clicked item
+                updateDetailPane(item);
+            });
         });
-        console.log(data);
+        console.log(data);e
     })
     .catch(error => console.error('Error loading data:', error));
 
@@ -56,7 +60,6 @@ fetch('resources/scripts/data.json')
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
 }).addTo(map);
-
 
 const filterTypes = [
     { name: 'EMR', options: ['EMR', 'Cerner', 'EPIC', 'MT56', 'MTx', 'MTX', 'Unknown'] },
@@ -125,10 +128,6 @@ function addressFilter(){
     alert('address')
 }
 
-
-
-
-
 // Side Bar Click
 // Array of link names
 const linkNames = ['Home', 'News', 'Contact', 'About'];
@@ -156,3 +155,28 @@ linkNames.forEach((name, index) => {
     // sidebar.appendChild(link);
 });
 
+function updateDetailPane(item) {
+    const detailPane = document.getElementById('detailPane');
+    // Create a content string or HTML structure with the item details
+    const content = `
+        <h2>${item.facility_name}</h2>
+        <p><strong>Facility Type:</strong> ${item.facility_type}</p>
+        <p><strong>ID:</strong>${item.facility_id}</p>
+        <p><strong>COID:</strong>${item.facility_coid}</p>
+        <p><strong>Address:</strong> ${item.full_address}</p>
+        <p><strong>Latitude:</strong> ${item.latitude}</p>
+        <p><strong>Longitutde:</strong> ${item.longitude}</p>
+        <p><strong>EMR Code:</strong> ${item.mnem}</p>
+        <p><strong>EMR System:</strong> ${item.demr_name}</p>
+        <p><strong>Company Name:</strong> ${item.company_name}</p>
+        <p><strong>Division:</strong> ${item.division_name}</p>
+        <p><strong>Division:</strong>${item.division_mnem}</p>
+        <p><strong>Network:</strong> ${item.network_meditech_network}</p>
+        <p><strong>Timezone:</strong> ${item.timezone}</p>
+        <p><strong>Timezone Offset:</strong> ${item.tz_utc_offset}</p>
+        <p><strong>Timezone Description:</strong> ${item.tz_description}</p>
+
+    `;
+    // Set the innerHTML of the detailPane to the content
+    detailPane.innerHTML = content;
+}
