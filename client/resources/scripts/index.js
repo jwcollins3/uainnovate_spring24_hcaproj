@@ -21,7 +21,7 @@ fetch('resources/scripts/data.json')
         console.log(data);
     })
     .catch(error => console.error('Error loading data:', error));
-}
+
  
 // Add the base map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
