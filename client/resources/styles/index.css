@@ -31,8 +31,8 @@
 /* Map */
 #map {
     width: 80%; /* Adjust the width to make it less wide */
-    margin: 20px auto; /* Center the map horizontally */
-    height: 280px; /* Adjust the height as needed */
+    margin: 40px auto 20px; /* Center the map horizontally */
+    height: 580px; /* Adjust the height as needed */
 }
 
 #filter-container {
@@ -90,4 +90,30 @@
 
 body {
     margin-right: 300px; /* Adjust body margin to prevent content from being hidden by the detail pane */
+}
+
+#detailPane {
+    padding: 20px;
+    border: 3px solid rgba(224, 89, 41);
+    border-radius: 5px;
+    background-color: #03173E;
+    margin-bottom: 20px;
+}
+
+/* Heading styles */
+#detailPane h2 {
+    color: #ffffff;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Paragraph styles */
+#detailPane p {
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+/* Strong (bold) text styles */
+#detailPane strong {
+    font-weight: bold;
 }
