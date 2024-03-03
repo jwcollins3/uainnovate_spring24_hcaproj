@@ -1,3 +1,7 @@
+body {
+    margin: 0; /* Remove default margin */
+}
+
 #header {
     display: flex;
     align-items: center;
@@ -9,7 +13,6 @@
     box-shadow: 0 10px 10px rgba(224, 89, 41);
     overflow: hidden;
 }
-
 
 #header img {
     width: 140px;
@@ -31,7 +34,7 @@
 /* Map */
 #map {
     width: 80%; /* Adjust the width to make it less wide */
-    margin: 40px auto 20px; /* Center the map horizontally */
+    margin: 50px auto 20px; /* Center the map horizontally */
     height: 580px; /* Adjust the height as needed */
 }
 

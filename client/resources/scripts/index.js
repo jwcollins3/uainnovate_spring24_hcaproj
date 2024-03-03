@@ -55,7 +55,7 @@ fetch('resources/scripts/data.json')
                 updateDetailPane(item);
             });
         });
-        console.log(data);e
+        console.log(data);
     })
     .catch(error => console.error('Error loading data:', error));
 
