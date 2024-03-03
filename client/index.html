@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HCA Map</title>
     <link rel="stylesheet" href="resources/styles/index.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
     <style>
         #map {
             height: 500px;
@@ -20,12 +22,17 @@
         </div>
     </div>
    
+
     <div id="filter-container">
         <span>Filter:</span>
-        <div id="dropdowns">
-            <!-- Dropdowns will be dynamically added here -->
-            
-        </div>
+        <select id="filter">
+            <option value="all">All</option>
+            <option value="Number">By EMR</option>
+            <option value="Number">By Address</option>
+            <option value="Number">By State/Zip Code</option>
+            <option value="Number">By Division</option>
+            <option value="Number">By Time Zone</option>
+        </select>
     </div>
 
     <div id="map"></div>
@@ -33,6 +40,7 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- optional for fetching GeoJSON data -->
     <script src="./resources/scripts/index.js"></script> <!-- your JavaScript code -->
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
 
     <div class="sidebar" id="sidebar">
         <!-- Sidebar links will be dynamically generated here -->
