@@ -1,4 +1,7 @@
-function handleOnLoad(){
+let hcaData = []
+
+async function handleOnLoad(){
+    await getData()
     displayDropdowns()
 }
 
@@ -6,16 +9,19 @@ function handleOnLoad(){
 const map = L.map('map').setView([37.8, -96], 4);
 const filterSelect = document.getElementById('filter');
 
-fetch('/client/resources/data.json')
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(item => {
-            L.marker([item.latitude, item.longitude]).addTo(map)
-                .bindPopup(item.full_address); // Assuming your JSON has latitude, longitude, and full_address fields
-        });
-        console.log(data);
+function getData(){
+    fetch('/client/resources/data.json')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(item => {
+                hcaData = data
+                L.marker([item.latitude, item.longitude]).addTo(map)
+                    .bindPopup(item.full_address); // Assuming your JSON has latitude, longitude, and full_address fields
+            });
+            console.log(hcaData);
     })
     .catch(error => console.error('Error loading data:', error));
+}
  
 
 // Add the base map
@@ -48,17 +54,47 @@ function displayDropdowns() {
 }
 
 function populateDropdowns(data, category, dropdownId) {
-    const dropdown = document.getElementById(dropdownId);
-    const filterType = filterTypes.find(filter => filter.name.toLowerCase() === category.toLowerCase());
+    let html = `
+    <span>Filter:
+        <select onclick="emrFilter()"></select>
+    
+        <!-- Timezone Dropdown -->
+        <select onclick="timezoneFilter()"></select>
+    
+        <!-- Division Dropdown -->
+        <select onclick="divisionFilter()"></select>
+    
+        <!-- State Dropdown -->
+        <select onclick="stateFilter()"></select>
+    
+        <!-- Address Dropdown -->
+        <select onclick="addressFilter()"></select>
 
-    if (filterType) {
-        filterType.options.forEach(option => {
-            const optionElement = document.createElement('option');
-            optionElement.value = option.toLowerCase().replace(/\s+/g, ''); // Convert option text to lowercase and remove spaces
-            optionElement.textContent = option;
-            // dropdown.appendChild(optionElement);
-        });
-    }
+        <!-- Include your JavaScript file -->
+        <script src="./resources/scripts/index.js"></script>
+    </span>`
+
+    document.getElementById('filter-container').innerHTML = html
+}
+
+function emrFilter(){
+    alert('yo')
+}
+
+function timezoneFilter(){
+    alert('timezome')
+}
+
+function divisionFilter(){
+    alert('division')
+}
+
+function stateFilter(){
+    alert('state')
+}
+
+function addressFilter(){
+    alert('address')
 }
 
 
