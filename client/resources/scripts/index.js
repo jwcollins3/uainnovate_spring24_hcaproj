@@ -20,6 +20,9 @@ var colors = {
 fetch('resources/scripts/data.json')
     .then(response => response.json())
     .then(data => {
+        // Create a Marker Cluster Group
+        var markers = new L.MarkerClusterGroup();
+
         data.forEach(item => {
             // Determine marker color based on facility_type
             let markerColor = '#000000'; // Default color
@@ -44,17 +47,24 @@ fetch('resources/scripts/data.json')
                 fillColor: markerColor,
                 fillOpacity: 0.5,
                 radius: 8
-            }).addTo(map).bindPopup(
+            }).bindPopup(
                 `<b><span class="orange-text">${item.facility_name}</span></b><br>${item.full_address}<br>${item.emr_name}<br>${item.division_name}`
             );
-        marker.on('mouseover', function(ev) {
-            marker.openPopup();
-        });
+            marker.on('mouseover', function(ev) {
+                marker.openPopup();
+            });
             marker.on('click', function() {
                 // Update the detail pane with information from the clicked item
                 updateDetailPane(item);
             });
+            
+            // Add the marker to the Marker Cluster Group
+            markers.addLayer(marker);
         });
+
+        // Add the Marker Cluster Group to the map
+        map.addLayer(markers);
+
         console.log(data);
     })
     .catch(error => console.error('Error loading data:', error));
