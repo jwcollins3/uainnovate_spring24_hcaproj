@@ -1,10 +1,4 @@
 let hcaData = [];
-//var markers = "";
-
-// async function handleOnLoad() {
-//     await getData();
-//     populateDropdowns();
-// }
 
 // Initialize the map
 const map = L.map('map').setView([37.8, -96], 4);
@@ -21,8 +15,7 @@ var colors = {
 //References to use for filtering
 var markerReferences = {};
 var markerObjects = {};
-//To delete markers
-//markers.removeLayer(marker);
+
 fetch('resources/scripts/data.json')
     .then(response => response.json())
     .then(data => {
@@ -34,7 +27,7 @@ fetch('resources/scripts/data.json')
 
         data.forEach(item => {
             // Determine marker color based on facility_type
-            let markerColor = '#000000'; // Default color
+            let markerColor = '#000000';
             switch (item.facility_type) {
                 case "Division Office":
                     markerColor = colors.divisionOffice;
@@ -73,17 +66,13 @@ fetch('resources/scripts/data.json')
             markers.on('mouseover', function (b) {
                 b.layer.spiderfy();
             });
-            // Add the marker to the Marker Cluster Group
-            //markers.addLayer(marker);
+            
             markerObjects[item] = marker;
             markerReferences[item] =  markers.addLayer(marker);
         });
 
         // Add the Marker Cluster Group to the map
         map.addLayer(markers);
-
-        //console.log(data);
-        //console.log(data[0])
     })
     .catch(error => console.error('Error loading data:', error));
 
@@ -99,7 +88,6 @@ const filterTypes = [
     { name: 'Timezone', options: ['Timezone', 'Eastern Timezone', 'Pacific Timezone', 'Central Timezone', 'Alaska Timezone', 'Mountain Timezone'] },
     { name: 'State', options: ['State', 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'] },
     { name: 'Address', options: ['Address', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
-    // Add more filter types with their respective options as needed
 ];
 
 function displayDropdowns() {
@@ -111,7 +99,6 @@ function displayDropdowns() {
             populateDropdowns(data, 'Division', 'divisionSelect');
             populateDropdowns(data, 'State', 'stateSelect');
             populateDropdowns(data, 'Address', 'addressSelect');
-            // Add more calls to populateDropdown for other categories
         })
         .catch(error => console.error('Error fetching JSON:', error));
 }
@@ -149,13 +136,14 @@ const filterOptions = {
     emr: ['Cerner', 'EPIC', 'MT56', 'MT6x', 'MTX', 'None', 'Unknown']
 };
 
+
 document.addEventListener("DOMContentLoaded", function() {
     const filterSelect = document.getElementById('filterOptions');
     const subFilterSelect = document.getElementById('subFilterOptions');
-    let hcaData = []; // Declare hcaData here
+    let hcaData = []; 
     
 
-    let filteredOption = ""; // Declare filteredOption here
+    let filteredOption = ""; 
 
     filterSelect.addEventListener('change', function(){
         console.log("Change for Filter Select")
@@ -164,27 +152,28 @@ document.addEventListener("DOMContentLoaded", function() {
         populateSubFilterOptions(subFilterSelect, options);
     })
 
-    subFilterSelect.addEventListener('change', function() {
+    subFilterSelect.addEventListener('change', async function() {
         console.log("Change for Sub Filter Select")
         const selectedOption = filterSelect.value;
-        const filteredOption = subFilterSelect.value; // Assign filteredOption here
-        hcaData.forEach(function(item) {
+        const filteredOption = subFilterSelect.value
+    
+        for (const item of hcaData) {
             if (filteredOption == item.facility_state) {
-                markers.clearLayers();
                 if (!markers.hasLayer(markerReferences[item])) {
                     console.log("true");
-                    markers.addLayer(markerReferences[item]);
-                    console.log(markers);
+                    await markers.addLayer(markerReferences[item]);
                 } 
-            }else {
+            } else {
                 if (markers.hasLayer(markerReferences[item])) {
                     markers.removeLayer(markerReferences[item]);
                     console.log("false");
-                    
                 }
             }
-        });
+        }
+    
+        console.log(markers);
     });
+    
     
 
     fetch('resources/scripts/data.json')
@@ -208,38 +197,11 @@ function populateSubFilterOptions(select, options) {
     });
 }
 
-
-// Array of link names
-const linkNames = ['Home', 'News', 'Contact', 'About'];
-
-// Get the sidebar container
-const sidebar = document.getElementById('sidebar');
-
-// Iterate over the link names array and create anchor elements
-linkNames.forEach((name, index) => {
-    // Create anchor element
-    const link = document.createElement('a');
-    
-    // Set href attribute
-    link.href = '#' + name.toLowerCase();
-    
-    // Set text content
-    link.textContent = name;
-    
-    // Add active class to the first link
-    if (index === 0) {
-        link.classList.add('active');
-    }
-    
-    // Append the anchor element to the sidebar container
-    // sidebar.appendChild(link);
-});
-
 //Detail Side Bar
 
 function updateDetailPane(item) {
     const detailPane = document.getElementById('detailPane');
-    // Create a content string or HTML structure with the item details
+    
     const content = `
         <h2>${item.facility_name}</h2>
         '<hr>';
@@ -249,8 +211,8 @@ function updateDetailPane(item) {
         <p><strong strong class="orange-text">Address:</strong> ${item.full_address}</p>
         <p><strong strong class="orange-text">Latitude:</strong> ${item.latitude}</p>
         <p><strong strong class="orange-text">Longitutde:</strong> ${item.longitude}</p>
-        <p><strong strong class="orange-text">EMR Code:</strong> ${item.mnem}</p>
-        <p><strong strong class="orange-text">EMR System:</strong> ${item.demr_name}</p>
+        <p><strong strong class="orange-text">EMR Code:</strong> ${item.emr_mnem}</p>
+        <p><strong strong class="orange-text">EMR System:</strong> ${item.emr_name}</p>
         <p><strong strong class="orange-text">Company Name:</strong> ${item.company_name}</p>
         <p><strong strong class="orange-text">Division:</strong> ${item.division_name}</p>
         <p><strong strong class="orange-text">Division:</strong> ${item.division_mnem}</p>
@@ -261,6 +223,5 @@ function updateDetailPane(item) {
 
     `;
     
-    // Set the innerHTML of the detailPane to the content
     detailPane.innerHTML = content;
 }

@@ -1,11 +1,11 @@
 body {
-    margin: 0; /* Remove default margin */
+    margin: 0;
 }
 
 #header {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center items horizontally */
+    justify-content: center;
     width: 100%;
     height: 120px;
     background-color: #03173E;
@@ -17,25 +17,25 @@ body {
 #header img {
     width: 140px;
     height: auto;
-    margin-right: 20px; /* Add some spacing between image and title */
+    margin-right: 20px;
 }
 
 #title {
     color: #ffffff;
-    text-align: center; /* Center the text horizontally */
+    text-align: center;
     font-weight: normal;
 }
 
 #title h1 {
-    margin: 0; /* Remove default margin */
+    margin: 0;
     font-weight: normal;
 }
 
 /* Map */
 #map {
-    width: 80%; /* Adjust the width to make it less wide */
-    margin: 50px auto 20px; /* Center the map horizontally */
-    height: 580px; /* Adjust the height as needed */
+    width: 80%;
+    margin: 50px auto 20px;
+    height: 580px;
 }
 
 #filter-container {
@@ -66,12 +66,12 @@ body {
 
 #botText {
     color: #ffffff;
-    text-align: center; /* Center the text horizontally */
+    text-align: center; 
     font-weight: normal;
 }
 
 #botText p {
-    margin: 0; /* Remove default margin */
+    margin: 0; 
     font-weight: normal;
 }
 
@@ -89,16 +89,16 @@ body {
     position: fixed;
     right: 0;
     top: 0;
-    width: 300px; /* Adjust the width as needed */
-    height: 100vh; /* Full height of the viewport */
-    background-color: #f4f4f4; /* Light grey background, change as needed */
-    overflow-y: auto; /* Add scroll for content overflow */
-    padding: 20px; /* Add some padding for content */
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1); /* Optional: adds a slight shadow for depth */
+    width: 300px; 
+    height: 100vh; 
+    background-color: #f4f4f4; 
+    overflow-y: auto; 
+    padding: 20px; 
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1); 
 }
 
 body {
-    margin-right: 300px; /* Adjust body margin to prevent content from being hidden by the detail pane */
+    margin-right: 300px; 
 }
 
 
@@ -133,7 +133,7 @@ body {
     font-weight: normal;
 }
 
-/* Strong (bold) text styles */
+/* Bold text styles */
 #detailPane strong {
     font-weight: bold;
 }
