@@ -45,7 +45,7 @@ fetch('resources/scripts/data.json')
                 fillOpacity: 0.5,
                 radius: 8
             }).addTo(map).bindPopup(
-                `<b>${item.facility_name}</b><br>${item.full_address}<br>${item.emr_name}<br>${item.division_name}`
+                `<b><span class="orange-text">${item.facility_name}</span></b><br>${item.full_address}<br>${item.emr_name}<br>${item.division_name}`
             );
         marker.on('mouseover', function(ev) {
             marker.openPopup();
@@ -163,23 +163,25 @@ function updateDetailPane(item) {
     // Create a content string or HTML structure with the item details
     const content = `
         <h2>${item.facility_name}</h2>
-        <p><strong>Facility Type:</strong> ${item.facility_type}</p>
-        <p><strong>ID:</strong>${item.facility_id}</p>
-        <p><strong>COID:</strong>${item.facility_coid}</p>
-        <p><strong>Address:</strong> ${item.full_address}</p>
-        <p><strong>Latitude:</strong> ${item.latitude}</p>
-        <p><strong>Longitutde:</strong> ${item.longitude}</p>
-        <p><strong>EMR Code:</strong> ${item.mnem}</p>
-        <p><strong>EMR System:</strong> ${item.demr_name}</p>
-        <p><strong>Company Name:</strong> ${item.company_name}</p>
-        <p><strong>Division:</strong> ${item.division_name}</p>
-        <p><strong>Division:</strong>${item.division_mnem}</p>
-        <p><strong>Network:</strong> ${item.network_meditech_network}</p>
-        <p><strong>Timezone:</strong> ${item.timezone}</p>
-        <p><strong>Timezone Offset:</strong> ${item.tz_utc_offset}</p>
-        <p><strong>Timezone Description:</strong> ${item.tz_description}</p>
+        '<hr>';
+        <p><strong class="orange-text">Facility Type:</strong> ${item.facility_type}</p>
+        <p><strong strong class="orange-text">ID:</strong> ${item.facility_id}</p>
+        <p><strong strong class="orange-text">COID:</strong> ${item.facility_coid}</p>
+        <p><strong strong class="orange-text">Address:</strong> ${item.full_address}</p>
+        <p><strong strong class="orange-text">Latitude:</strong> ${item.latitude}</p>
+        <p><strong strong class="orange-text">Longitutde:</strong> ${item.longitude}</p>
+        <p><strong strong class="orange-text">EMR Code:</strong> ${item.mnem}</p>
+        <p><strong strong class="orange-text">EMR System:</strong> ${item.demr_name}</p>
+        <p><strong strong class="orange-text">Company Name:</strong> ${item.company_name}</p>
+        <p><strong strong class="orange-text">Division:</strong> ${item.division_name}</p>
+        <p><strong strong class="orange-text">Division:</strong> ${item.division_mnem}</p>
+        <p><strong strong class="orange-text">Network:</strong> ${item.network_meditech_network}</p>
+        <p><strong strong class="orange-text">Timezone:</strong> ${item.timezone}</p>
+        <p><strong strong class="orange-text">Timezone Offset:</strong> ${item.tz_utc_offset}</p>
+        <p><strong strong class="orange-text">Timezone Description:</strong> ${item.tz_description}</p>
 
     `;
+    
     // Set the innerHTML of the detailPane to the content
     detailPane.innerHTML = content;
 }
