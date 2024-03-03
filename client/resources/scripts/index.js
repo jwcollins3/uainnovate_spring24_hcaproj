@@ -47,6 +47,9 @@ fetch('resources/scripts/data.json')
             }).addTo(map).bindPopup(
                 `<b>${item.facility_name}</b><br>${item.full_address}<br>${item.emr_name}<br>${item.division_name}`
             );
+        marker.on('mouseover', function(ev) {
+            marker.openPopup();
+        });
             marker.on('click', function() {
                 // Update the detail pane with information from the clicked item
                 updateDetailPane(item);
