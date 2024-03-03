@@ -19,22 +19,40 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
 }).addTo(map);
 
-// Add event listener to handle filter change
-filterSelect.addEventListener('change', function() {
-    const filterValue = this.value; // Get the selected filter value
 
-    // Perform filtering based on selected value
-    if (filterValue === 'state') {
-        // Logic to filter by state
-        // Example: showStateMarkers();
-    } else if (filterValue === 'city') {
-        // Logic to filter by city
-        // Example: showCityMarkers();
-    } else {
-        // Show all markers
-        // Example: showAllMarkers();
-    }
-});
+
+// const filterTypes = [
+//     { name: 'EMR', options: ['EMR', 'EMR Option 1', 'EMR Option 2', 'EMR Option 3'] },
+//     { name: 'Division', options: ['Division', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
+//     { name: 'Timezone', options: ['Timezone', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
+//     { name: 'State/Zip', options: ['State', 'Address Option 1', 'Address Option 2', 'Address Option 3'] },
+//     { name: 'Address', options: ['Address', 'Address Option 1', 'Address Option 2', 'Address Option 3'] }
+   
+// ]
+function populateDropdown(data, category, dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    const uniqueValues = [...new Set(data.map(item => item[category]))];
+
+    uniqueValues.forEach(value => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        dropdown.appendChild(option);
+    });
+}
+
+// Fetch data and populate dropdowns
+fetch('/client/resources/data.json')
+    .then(response => response.json())
+    .then(data => {
+        populateDropdown(data, 'emr_name', 'emrSelect');
+        populateDropdown(data, 'facility_state', 'stateSelect');
+        populateDropdown(data, 'timezone', 'timezoneSelect');
+        // Add more calls to populateDropdown for other categories
+    })
+    .catch(error => console.error('Error fetching JSON:', error));
+
+
 
 // Side Bar Click
 // Array of link names
@@ -60,6 +78,6 @@ linkNames.forEach((name, index) => {
     }
     
     // Append the anchor element to the sidebar container
-    sidebar.appendChild(link);
+    // sidebar.appendChild(link);
 });
 
