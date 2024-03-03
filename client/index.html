@@ -14,26 +14,15 @@
         }
     </style>
 </head>
-<body>
+<body onload="handleOnLoad()">
     <div id="header">
         <img src="https://hcahealthcaretoday.com/wp-content/uploads/2020/05/HCA-Healthcare-Logo@2x.png" alt="Header Image">
          <div id="title">
              <h1>HCA Interactive Map</h1>
         </div>
     </div>
-   
 
-    <div id="filter-container">
-        <span>Filter:</span>
-        <select id="filter">
-            <option value="all">All</option>
-            <option value="Number">By EMR</option>
-            <option value="Number">By Address</option>
-            <option value="Number">By State/Zip Code</option>
-            <option value="Number">By Division</option>
-            <option value="Number">By Time Zone</option>
-        </select>
-    </div>
+    <div id="filter-container"></div>
 
     <div id="map"></div>
 
