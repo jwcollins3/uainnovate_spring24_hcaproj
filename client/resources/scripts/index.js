@@ -45,12 +45,18 @@ fetch('resources/scripts/data.json')
                 fillOpacity: 0.5,
                 radius: 8
             }).addTo(map).bindPopup(
-                `<b>${item.facility_name}</b><br>${item.full_address}<br>${item.emr_name}<br>${item.division_name}`
+                `<b>${item.facility_name}</b>
+                <br>${item.full_address}
+                <br>${item.emr_name}
+                <br>${item.division_name}<br>
+                </br>
+                <a href="#" class="more-info">More Info</a>`
             );
             marker.on('click', function() {
                 // Update the detail pane with information from the clicked item
                 updateDetailPane(item);
             });
+            
         });
         console.log(data);e
     })
@@ -155,6 +161,7 @@ linkNames.forEach((name, index) => {
     // sidebar.appendChild(link);
 });
 
+
 function updateDetailPane(item) {
     const detailPane = document.getElementById('detailPane');
     // Create a content string or HTML structure with the item details
@@ -180,3 +187,4 @@ function updateDetailPane(item) {
     // Set the innerHTML of the detailPane to the content
     detailPane.innerHTML = content;
 }
+
