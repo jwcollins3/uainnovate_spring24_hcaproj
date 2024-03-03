@@ -1,9 +1,10 @@
 let hcaData = [];
+//var markers = "";
 
-async function handleOnLoad() {
-    await getData();
-    populateDropdowns();
-}
+// async function handleOnLoad() {
+//     await getData();
+//     populateDropdowns();
+// }
 
 // Initialize the map
 const map = L.map('map').setView([37.8, -96], 4);
@@ -19,15 +20,17 @@ var colors = {
 
 //References to use for filtering
 var markerReferences = {};
+var markerObjects = {};
 //To delete markers
 //markers.removeLayer(marker);
 fetch('resources/scripts/data.json')
     .then(response => response.json())
     .then(data => {
         // Create a Marker Cluster Group
-        var markers = new L.MarkerClusterGroup({
+        markers = new L.markerClusterGroup({
             spiderfyOnMaxZoom: true
         });
+        
 
         data.forEach(item => {
             // Determine marker color based on facility_type
@@ -64,17 +67,23 @@ fetch('resources/scripts/data.json')
                 updateDetailPane(item);
                 
             });
-            
+            markers.on('mouseover', function (a) {
+                a.layer.spiderfy();
+            });
+            markers.on('mouseover', function (b) {
+                b.layer.spiderfy();
+            });
             // Add the marker to the Marker Cluster Group
-            markers.addLayer(marker);
-            markerReferences[item] = marker;
+            //markers.addLayer(marker);
+            markerObjects[item] = marker;
+            markerReferences[item] =  markers.addLayer(marker);
         });
 
         // Add the Marker Cluster Group to the map
         map.addLayer(markers);
 
         //console.log(data);
-        console.log(data[0])
+        //console.log(data[0])
     })
     .catch(error => console.error('Error loading data:', error));
 
@@ -82,6 +91,7 @@ fetch('resources/scripts/data.json')
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
 }).addTo(map);
+
 
 const filterTypes = [
     { name: 'EMR', options: ['EMR', 'Cerner', 'EPIC', 'MT56', 'MTx', 'MTX', 'Unknown'] },
@@ -133,30 +143,60 @@ function populateDropdowns(data, category, dropdownId) {
 const filterOptions = {
     all: [],
     address: ['Full Address', 'City', 'State', 'Zip'],
-    state: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'], // All 50 states
+    state: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'], // All 50 states
     division: ['Capital', 'Central West Texas', 'Continental', 'East Florida', 'Far West', 'Gulf Coast', 'HCA Corp', 'HSC', 'MidAmerica', 'Mountain', 'North Carolina', 'North Florida', 'North Texas', 'Physician Services Group', 'San Antonio', 'South Atlantic', 'Supply Chain', 'Tristar'], // Will be populated dynamically
-    timeZone: ['Time Zone Code'],
-    emr: ['EMR Code']
+    timeZone: ['Eastern', 'Central', 'Mountain', 'Pacific', 'Alaska'],
+    emr: ['Cerner', 'EPIC', 'MT56', 'MT6x', 'MTX', 'None', 'Unknown']
 };
 
 document.addEventListener("DOMContentLoaded", function() {
     const filterSelect = document.getElementById('filterOptions');
     const subFilterSelect = document.getElementById('subFilterOptions');
+    let hcaData = []; // Declare hcaData here
+    
 
-    filterSelect.addEventListener('change', function() {
+    let filteredOption = ""; // Declare filteredOption here
+
+    filterSelect.addEventListener('change', function(){
+        console.log("Change for Filter Select")
         const selectedOption = filterSelect.value;
         const options = filterOptions[selectedOption] || [];
         populateSubFilterOptions(subFilterSelect, options);
+    })
+
+    subFilterSelect.addEventListener('change', function() {
+        console.log("Change for Sub Filter Select")
+        const selectedOption = filterSelect.value;
+        const filteredOption = subFilterSelect.value; // Assign filteredOption here
+        hcaData.forEach(function(item) {
+            if (filteredOption == item.facility_state) {
+                markers.clearLayers();
+                if (!markers.hasLayer(markerReferences[item])) {
+                    console.log("true");
+                    markers.addLayer(markerReferences[item]);
+                    console.log(markers);
+                } 
+            }else {
+                if (markers.hasLayer(markerReferences[item])) {
+                    markers.removeLayer(markerReferences[item]);
+                    console.log("false");
+                    
+                }
+            }
+        });
     });
+    
 
     fetch('resources/scripts/data.json')
         .then(response => response.json())
         .then(data => {
+            hcaData = data;
             const divisionNames = [...new Set(data.map(item => item.division_name))];
             filterOptions.division = divisionNames;
         })
-        .catch(error => console.error('Error loading data:', error));
+        .catch(error => console.error('Error loading data:', error))
 });
+
 
 function populateSubFilterOptions(select, options) {
     select.innerHTML = '<option value="">Select a filter</option>';
