@@ -17,11 +17,17 @@ var colors = {
     hospital: '#FF0000'  // Pink
 };
 
+//References to use for filtering
+var markerReferences = [];
+//To delete markers
+//markers.removeLayer(marker);
 fetch('resources/scripts/data.json')
     .then(response => response.json())
     .then(data => {
         // Create a Marker Cluster Group
-        var markers = new L.MarkerClusterGroup();
+        var markers = new L.MarkerClusterGroup({
+            spiderfyOnMaxZoom: true
+        });
 
         data.forEach(item => {
             // Determine marker color based on facility_type
@@ -56,10 +62,12 @@ fetch('resources/scripts/data.json')
             marker.on('click', function() {
                 // Update the detail pane with information from the clicked item
                 updateDetailPane(item);
+                
             });
             
             // Add the marker to the Marker Cluster Group
             markers.addLayer(marker);
+            markerReferences.push(marker);
         });
 
         // Add the Marker Cluster Group to the map
